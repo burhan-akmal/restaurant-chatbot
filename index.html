@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurant Booking Chatbot</title>
+</head>
+<body>
+  <h1>Welcome to Our Restaurant</h1>
+  <p>Talk to our chatbot below to make a booking.</p>
+  
+  <form id="chatForm">
+    <input type="text" id="message" placeholder="Type a message..." required>
+    <button type="submit">Send</button>
+  </form>
+
+  <pre id="responseBox"></pre>
+
+  <script>
+    document.getElementById("chatForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const message = document.getElementById("message").value;
+      
+      const res = await fetch("https://buraan.app.n8n.cloud/webhook-test/b280e611-9b69-4653-a2e2-a3d9454388a6", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.text(); // or .json() depending on your n8n response
+      document.getElementById("responseBox").textContent = data;
+    });
+  </script>
+</body>
+</html>
